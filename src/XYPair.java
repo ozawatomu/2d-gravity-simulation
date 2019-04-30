@@ -7,6 +7,11 @@ public class XYPair {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public XYPair(XYPair a, XYPair b) {
+		this.x = x;
+		this.y = y;
+	}
 
 	public XYPair clone() {
 		return new XYPair(this.x, this.y);
@@ -19,6 +24,17 @@ public class XYPair {
 	public void add(XYPair otherPair) {
 		x += otherPair.x;
 		y += otherPair.y;
+	}
+	
+	public XYPair minus(XYPair otherPair) {
+		double nx = x - otherPair.x;
+		double ny = y - otherPair.y;
+		return new XYPair(nx, ny);
+	}
+	
+	public void negate() {
+		x = -x;
+		y = -y;
 	}
 	
 	public void scale(double scale) {
@@ -68,5 +84,10 @@ public class XYPair {
 	
 	public double dotProduct(XYPair otherPair) {
 		return x*otherPair.x + y*otherPair.y;
+	}
+	
+	public void normalise() {
+		x = x/getMagnitude();
+		y = y/getMagnitude();
 	}
 }

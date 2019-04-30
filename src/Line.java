@@ -27,4 +27,8 @@ public class Line {
 		pointB.x = x;
 		pointB.y = y;
 	}
+	
+	public XYPair toXYPair() {
+		return new XYPair(pointB.x - pointA.x, pointB.y - pointA.y);
+	}
 }
