@@ -28,7 +28,7 @@ public class Mass {
 		location.y = y;
 	}
 	
-	public void draw(Graphics g, int opacity) {
+	public void draw(Graphics g, int opacity, boolean isDrawVelocity) {
 		if(visibility) {
 			g.setColor(new Color(255, 255, 255, opacity));
 			g.fillOval((int) (location.x - radius), (int) (location.y - radius), (int) (2*radius), (int) (2*radius));
@@ -36,7 +36,9 @@ public class Mass {
 				g.setColor(new Color(255, 0, 0, opacity));
 				g.drawOval((int) (location.x - radius), (int) (location.y - radius), (int) (2*radius), (int) (2*radius));
 			}
-			drawVelocity(g, opacity);
+			if (isDrawVelocity) {
+				drawVelocity(g, opacity);
+			}
 		}
 	}
 	

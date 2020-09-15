@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -14,10 +16,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Space extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener{
+public class Space extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener{
 	Timer timer = new Timer(30, this);
-	static int screenSizeWidth = 1620/2;
-	static int screenSizeHeight = 1620/2;
+	static int screenSizeWidth = 1620;
+	static int screenSizeHeight = 1620;
+	static boolean isDrawVelocity = false;
 	static ArrayList<Mass> masses;
 	static Mass phantomMass;
 	static Line phantomLine;
@@ -40,6 +43,7 @@ public class Space extends JPanel implements ActionListener, MouseListener, Mous
 		space.addMouseListener(space);
 		space.addMouseMotionListener(space);
 		space.addMouseWheelListener(space);
+		jFrame.addKeyListener(space);
 		space.setPreferredSize(new Dimension(screenSizeWidth, screenSizeHeight));
 		jFrame.add(space);
 		jFrame.pack();
@@ -67,15 +71,15 @@ public class Space extends JPanel implements ActionListener, MouseListener, Mous
 		for(Mass mass: masses) {
 			otherMasses.add(mass.copy());
 		}*/
-		for(int i = 0; i < masses.size(); i++) {
+		/*for(int i = 0; i < masses.size(); i++) {
 			for(int j = i + 1; j < masses.size(); j++) {
 				masses.get(i).calculateCollision(masses.get(j));
 			}
-		}
+		}*/
 		for(Mass mass: masses) {
-			mass.draw(g, 200);
+			mass.draw(g, 200, isDrawVelocity);
 		}
-		phantomMass.draw(g, 32);
+		phantomMass.draw(g, 32, true);
 		g.drawLine((int) phantomLine.pointA.x, (int) phantomLine.pointA.y, (int) phantomLine.pointB.x, (int) phantomLine.pointB.y);
 		timer.start();
 	}
@@ -157,6 +161,24 @@ public class Space extends JPanel implements ActionListener, MouseListener, Mous
 		if(phantomMass.radius < 1) {
 			phantomMass.radius = 1;
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e){
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_V:
+			isDrawVelocity = !isDrawVelocity;
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e){
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e){
 	}
 
 }
